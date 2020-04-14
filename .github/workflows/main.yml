@@ -25,17 +25,15 @@ jobs:
       with:
         azcliversion: 2.0.75
         inlineScript: |
-          az group create --location eastus --name asc-quickstart-rg-1
-          az configure --defaults group=asc-quickstart-rg-1
-          az spring-cloud create --name asc-quickstart-1
-          az configure --defaults spring-cloud=asc-quickstart-1
+          az configure --defaults group=zlhe-test
+          az configure --defaults spring-cloud=zlhe-test-bugbash
     
     - name: Setup Config Server
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.75
         inlineScript: |
-          az spring-cloud config-server git set --name asc-quickstart-1 --uri https://github.com/Sneezry/piggymetrics --label config
+          az spring-cloud config-server git set --name zlhe-test-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
 
     - name: Setup JDK 1.8
       uses: actions/setup-java@v1
