@@ -13,28 +13,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    - name: Install Azure Spring Cloud CLI Extension
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
-          az extension add --name spring-cloud
-
-    - name: Create Azure Spring Cloud Service
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
-          az configure --defaults group=zlhe-test
-          az configure --defaults spring-cloud=zlhe-test-bugbash
-    
-    - name: Setup Config Server
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
-          az spring-cloud config-server git set --name zlhe-test-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
-
     - name: Setup JDK 1.8
       uses: actions/setup-java@v1
       with: 
@@ -51,29 +29,21 @@ jobs:
       run: |
         cd piggymetrics
         mvn clean package -D skipTests
-
+          
     - name: Create Microservices
       uses: azure/CLI@v1
       with:
         azcliversion: 2.0.75
         inlineScript: |
+          az extension add --name spring-cloud
+          az configure --defaults group=zlhe-test
+          az configure --defaults spring-cloud=zlhe-test-bugbash
+          az spring-cloud config-server git set --name zlhe-test-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
           az spring-cloud app create --name gateway
           az spring-cloud app create --name auth-service
           az spring-cloud app create --name account-service
-
-    - name: Deploy Microservices
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
           az spring-cloud app deploy -n gateway --jar-path $GITHUB_WORKSPACE/piggymetrics/gateway/target/gateway.jar
           az spring-cloud app deploy -n account-service --jar-path $GITHUB_WORKSPACE/piggymetrics/account-service/target/account-service.jar
           az spring-cloud app deploy -n auth-service --jar-path $GITHUB_WORKSPACE/piggymetrics/auth-service/target/auth-service.jar
-
-    - name: Assign Public Endpoint to Gateway
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
           az spring-cloud app update -n gateway --is-public true
           az spring-cloud app show --name gateway | grep url
