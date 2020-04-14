@@ -38,7 +38,7 @@ jobs:
           az extension add --name spring-cloud
           az configure --defaults group=zlhe-test
           az configure --defaults spring-cloud=zlhe-test-bugbash
-          az spring-cloud config-server git set --name zlhe-test-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
+          az spring-cloud config-server git set --name zlhe-applens-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
           az spring-cloud app create --name gateway
           az spring-cloud app create --name auth-service
           az spring-cloud app create --name account-service
