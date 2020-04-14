@@ -17,7 +17,7 @@ public class GatewayApplication {
     }
 
 	public static void main(String[] args) {
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100; i++) {
             GatewayApplication f = new GatewayApplication();
         }
 		SpringApplication.run(GatewayApplication.class, args);
