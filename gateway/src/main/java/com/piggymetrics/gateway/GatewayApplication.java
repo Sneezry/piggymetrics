@@ -17,14 +17,9 @@ public class GatewayApplication {
     }
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
-        
-		while (true) {
-            for (int i = 0; i < 100000; i++) {
-                GatewayApplication f = new GatewayApplication();
-            }
-
-            System.out.println("" + Runtime.getRuntime().freeMemory() + " bytes free!");
+        for (int i = 0; i < 100000; i++) {
+            GatewayApplication f = new GatewayApplication();
         }
+		SpringApplication.run(GatewayApplication.class, args);
 	}
 }
