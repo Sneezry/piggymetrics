@@ -46,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
 	public Account create(User user) {
 
 		Account existing = repository.findByName(user.getUsername());
+		create(user);
 		Assert.isNull(existing, "account already exists: " + user.getUsername());
 
 		authClient.createUser(user);
