@@ -38,9 +38,9 @@ jobs:
           az configure --defaults group=zlhe-autoscale-for-patrick
           az configure --defaults spring-cloud=zlhe-autoscale-piggymetrics
           az spring-cloud config-server git set --name zlhe-autoscale-piggymetrics --uri https://github.com/Azure-Samples/piggymetrics --label config
-          #az spring-cloud app create --name gateway
-          #az spring-cloud app create --name auth-service
-          #az spring-cloud app create --name account-service
+          az spring-cloud app create --name gateway
+          az spring-cloud app create --name auth-service
+          az spring-cloud app create --name account-service
           az spring-cloud app deploy -n gateway --jar-path $GITHUB_WORKSPACE/piggymetrics/gateway/target/gateway.jar
           az spring-cloud app deploy -n account-service --jar-path $GITHUB_WORKSPACE/piggymetrics/account-service/target/account-service.jar
           az spring-cloud app deploy -n auth-service --jar-path $GITHUB_WORKSPACE/piggymetrics/auth-service/target/auth-service.jar
