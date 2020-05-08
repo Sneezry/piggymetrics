@@ -21,8 +21,7 @@ jobs:
     - name: Clone Microservices Application Source Code
       uses: actions/checkout@v2-beta
       with:
-        repository: 'Sneezry/piggymetrics'
-        ref: 'zlhe/bugbash'
+        repository: 'Azure-Samples/piggymetrics'
         path: 'piggymetrics'
 
     - name: Build Microservices Application
@@ -36,9 +35,9 @@ jobs:
         azcliversion: 2.0.75
         inlineScript: |
           az extension add --name spring-cloud
-          az configure --defaults group=zlhe-bugbash
-          az configure --defaults spring-cloud=zlhe-bugbash
-          az spring-cloud config-server git set --name zlhe-bugbash --uri https://github.com/Sneezry/piggymetrics --label config
+          az configure --defaults group=zlhe-autoscale-for-patrick
+          az configure --defaults spring-cloud=zlhe-autoscale-piggymetrics
+          az spring-cloud config-server git set --name zlhe-autoscale-piggymetrics --uri https://github.com/Azure-Samples/piggymetrics --label config
           #az spring-cloud app create --name gateway
           #az spring-cloud app create --name auth-service
           #az spring-cloud app create --name account-service
